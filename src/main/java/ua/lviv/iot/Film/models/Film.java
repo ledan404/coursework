@@ -12,7 +12,7 @@ import java.util.List;
 @Setter
 @ToString
 public final class Film {
-    private static final String HEADER = "id, name, actor, rating, review, description, fact";
+    private static final String HEADER = "id, name, actor, rating, review, description, fact\n";
     @Id
     public Integer id;
 
@@ -39,4 +39,10 @@ public final class Film {
         this.fact = fact;
     }
 
+    public String getHeaders() {
+        return HEADER;
+    }
+    public String toCsv() {
+        return id + "," + name + "," + actor + "," + rating + "," + review + "," + description + "," + fact + "\n";
+    }
 }

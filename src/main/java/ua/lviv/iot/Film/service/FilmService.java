@@ -27,8 +27,8 @@ public final class FilmService {
     @Autowired
     public FilmService(final FilmWriter filmWriter) throws IOException {
         this.filmWriter = filmWriter;
-        this.nextAvailable = new AtomicInteger(filmWriter.getLastId(FilmWriter.PATH));
-        this.FilmMap = filmWriter.getFilmsFromCSV(FilmWriter.PATH);
+        this.nextAvailable = new AtomicInteger(0);
+        this.FilmMap = filmWriter.readFilmsFromCsv();
     }
 
 
@@ -47,19 +47,17 @@ public final class FilmService {
     public void postFilm(Film film) throws IOException {
         film.setId(nextAvailable.incrementAndGet());
         FilmMap.put(film.getId(), film);
-        filmWriter.writeToCSV(film, FilmWriter.PATH);
+        filmWriter.getFilmsToCsv(FilmMap);
     }
 
     public void putFilm(Integer id, Film film) throws IOException {
         film.setId(id);
         FilmMap.replace(id, film);
-        filmWriter.putFilm(film.getId(), film, FilmWriter.PATH);
-        filmWriter.writeToCSV(film, FilmWriter.PATH);
+        filmWriter.getFilmsToCsv(FilmMap);
     }
 
     public void deleteFilm(Integer id) throws IOException {
         FilmMap.remove(id);
-        filmWriter.deleteFilmBy(id, FilmWriter.PATH);
-
+        filmWriter.getFilmsToCsv(FilmMap);
     }
 }
