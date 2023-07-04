@@ -18,7 +18,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Getter
 public final class FilmService {
 
-    private final Map<Integer, Film> FilmMap;
+    private final Map<Integer, Film> filmMap;
 
     private final FilmWriter filmWriter;
 
@@ -28,36 +28,43 @@ public final class FilmService {
     public FilmService(final FilmWriter filmWriter) throws IOException {
         this.filmWriter = filmWriter;
         this.nextAvailable = new AtomicInteger(0);
-        this.FilmMap = filmWriter.readFilmsFromCsv();
+        this.filmMap = new HashMap<>(filmWriter.readFilmsFromCsv());
     }
 
+    public Map<Integer, Film> getFilmMap() {
+        return new HashMap<>(filmMap);
+    }
+
+    public AtomicInteger getNextAvailable() {
+        return new AtomicInteger(nextAvailable.get());
+    }
 
     public Map<Integer, Film> getMap() {
-        return new HashMap<>(FilmMap);
+        return new HashMap<>(filmMap);
     }
 
     public List<Film> getAllFilm() {
-        return new LinkedList<>(FilmMap.values());
+        return new LinkedList<>(filmMap.values());
     }
 
     public Film getFilm(Integer id) {
-        return FilmMap.get(id);
+        return filmMap.get(id);
     }
 
     public void postFilm(Film film) throws IOException {
         film.setId(nextAvailable.incrementAndGet());
-        FilmMap.put(film.getId(), film);
-        filmWriter.getFilmsToCsv(FilmMap);
+        filmMap.put(film.getId(), film);
+        filmWriter.getFilmsToCsv(filmMap);
     }
 
     public void putFilm(Integer id, Film film) throws IOException {
         film.setId(id);
-        FilmMap.replace(id, film);
-        filmWriter.getFilmsToCsv(FilmMap);
+        filmMap.replace(id, film);
+        filmWriter.getFilmsToCsv(filmMap);
     }
 
     public void deleteFilm(Integer id) throws IOException {
-        FilmMap.remove(id);
-        filmWriter.getFilmsToCsv(FilmMap);
+        filmMap.remove(id);
+        filmWriter.getFilmsToCsv(filmMap);
     }
 }

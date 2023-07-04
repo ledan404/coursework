@@ -5,6 +5,8 @@ import ua.lviv.iot.Film.models.Film;
 
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -21,7 +23,7 @@ public final class FilmWriter {
 
 
     public void getFilmsToCsv(Map<Integer, Film> filmMap) {
-        try (FileWriter writer = new FileWriter(getFileName())) {
+        try (Writer writer = new OutputStreamWriter(new FileOutputStream(getFileName()), StandardCharsets.UTF_8)) {
             for (Film film : filmMap.values()) {
                 writer.write(film.getHeaders());
                 writer.write(film.toCsv());
@@ -31,7 +33,7 @@ public final class FilmWriter {
         }
     }
 
-    public Map<Integer, Film> readFilmsFromCsv() throws FileNotFoundException {
+    public Map<Integer, Film> readFilmsFromCsv() throws IOException {
         Map<Integer, Film> map = new HashMap<>();
         for (int i = Integer.parseInt(new SimpleDateFormat("dd").format(new Date())) - 1; i >= 0; i--) {
             Date date = new Date();
@@ -41,7 +43,7 @@ public final class FilmWriter {
             date = calendar.getTime();
             File file = new File(new SimpleDateFormat("'film-'yyyy-MM-").format(new Date()) + new SimpleDateFormat("dd").format(date) + ".csv");
             if (file.exists()) {
-                Scanner scanner = new Scanner(file);
+                Scanner scanner = new Scanner(file, StandardCharsets.UTF_8);
                 while (scanner.hasNext()) {
                     scanner.nextLine();
                     String text = scanner.nextLine();

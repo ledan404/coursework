@@ -14,9 +14,10 @@ import java.util.List;
 public final class FilmController {
     private final FilmService filmService;
 
+
     @Autowired
-    public FilmController(FilmService filmService) {
-        this.filmService = filmService;
+    public FilmController(FilmService filmService) throws IOException {
+        this.filmService = new FilmService(filmService.getFilmWriter());
     }
 
     @GetMapping
