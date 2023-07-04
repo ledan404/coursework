@@ -12,24 +12,30 @@ import java.util.List;
 @Setter
 @ToString
 public final class Film {
-    private static final String HEADER = "id, name, actor, rating, review, description, fact\n";
+    private static final String
+            HEADER = "id, name, actor, rating, review, description, fact\n";
     @Id
-    public Integer id;
+    private Integer id;
 
-    public String name;
+    private String name;
 
-    public List<String> actor;
+    private List<String> actor;
 
-    public double rating;
+    private double rating;
 
-    public List<String> review;
+    private List<String> review;
 
-    public String description;
+    private String description;
 
-    public List<String> fact;
+    private List<String> fact;
 
-    public Film(Integer id, String name, List<String> actor, double rating, List<String> review,
-                String description, List<String> fact) {
+    public Film(final Integer id,
+                final String name,
+                final List<String> actor,
+                final double rating,
+                final List<String> review,
+                final String description,
+                final List<String> fact) {
         this.id = id;
         this.name = name;
         this.actor = actor;
@@ -44,6 +50,8 @@ public final class Film {
     }
 
     public String toCsv() {
-        return id + "," + name + "," + actor + "," + rating + "," + review + "," + description + "," + fact + "\n";
+        return id + "," + name + "," + actor + ","
+                + rating + "," + review + ","
+                + description + "," + fact + "\n";
     }
 }

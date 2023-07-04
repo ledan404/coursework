@@ -4,7 +4,11 @@ import org.springframework.stereotype.Component;
 import ua.lviv.iot.Film.models.Film;
 
 
-import java.io.*;
+import java.io.File;
+import java.io.Writer;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -21,7 +25,7 @@ public final class FilmWriter {
     }
 
 
-    public void getFilmsToCsv(Map<Integer, Film> filmMap) {
+    public void getFilmsToCsv(final Map<Integer, Film> filmMap) {
         try (Writer writer = new OutputStreamWriter(new FileOutputStream(getFileName()), StandardCharsets.UTF_8)) {
             for (Film film : filmMap.values()) {
                 writer.write(film.getHeaders());

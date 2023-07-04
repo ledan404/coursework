@@ -2,7 +2,15 @@ package ua.lviv.iot.Film.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
+
 import ua.lviv.iot.Film.models.Film;
 import ua.lviv.iot.Film.service.FilmService;
 
@@ -16,17 +24,17 @@ public final class FilmController {
 
 
     @Autowired
-    public FilmController(FilmService filmService) throws IOException {
+    public FilmController(final FilmService filmService) throws IOException {
         this.filmService = new FilmService(filmService.getFilmWriter());
     }
 
     @GetMapping
-    public final ResponseEntity<List<Film>> getAll() {
+    public ResponseEntity<List<Film>> getAll() {
         return ResponseEntity.ok(filmService.getAllFilm());
     }
 
     @GetMapping(path = "/{id}")
-    public ResponseEntity<Film> getById(@PathVariable Integer id) {
+    public ResponseEntity<Film> getById(@PathVariable final Integer id) {
         Film film = filmService.getFilm(id);
         if (film != null) {
             return ResponseEntity.ok(film);
@@ -36,7 +44,7 @@ public final class FilmController {
     }
 
     @PostMapping
-    public ResponseEntity<Film> create(@RequestBody Film film) {
+    public ResponseEntity<Film> create(@RequestBody final Film film) {
         try {
             filmService.postFilm(film);
             return ResponseEntity.ok(film);
@@ -46,8 +54,9 @@ public final class FilmController {
     }
 
     @PutMapping(path = "/{id}")
-    public ResponseEntity<Film> put(@RequestBody Film film,
-                                    @PathVariable Integer id) throws IOException {
+    public ResponseEntity<Film> put(@RequestBody final Film film,
+                                    @PathVariable final Integer id)
+            throws IOException {
         try {
             filmService.putFilm(id, film);
             return ResponseEntity.ok(film);
@@ -57,7 +66,8 @@ public final class FilmController {
     }
 
     @DeleteMapping(path = "/{id}")
-    public ResponseEntity<Film> delete(@PathVariable Integer id) throws IOException {
+    public ResponseEntity<Film> delete(@PathVariable final Integer id)
+            throws IOException {
         if (!filmService.getFilmMap().containsKey(id)) {
             return ResponseEntity.notFound().build();
         }

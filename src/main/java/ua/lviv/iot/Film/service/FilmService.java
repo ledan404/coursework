@@ -47,23 +47,23 @@ public final class FilmService {
         return new LinkedList<>(filmMap.values());
     }
 
-    public Film getFilm(Integer id) {
+    public Film getFilm(final Integer id) {
         return filmMap.get(id);
     }
 
-    public void postFilm(Film film) throws IOException {
+    public void postFilm(final Film film) throws IOException {
         film.setId(nextAvailable.incrementAndGet());
         filmMap.put(film.getId(), film);
         filmWriter.getFilmsToCsv(filmMap);
     }
 
-    public void putFilm(Integer id, Film film) throws IOException {
+    public void putFilm(final Integer id, final Film film) {
         film.setId(id);
         filmMap.replace(id, film);
         filmWriter.getFilmsToCsv(filmMap);
     }
 
-    public void deleteFilm(Integer id) throws IOException {
+    public void deleteFilm(final Integer id) {
         filmMap.remove(id);
         filmWriter.getFilmsToCsv(filmMap);
     }
