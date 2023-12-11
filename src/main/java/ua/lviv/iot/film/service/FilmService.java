@@ -1,11 +1,11 @@
-package ua.lviv.iot.Film.service;
+package ua.lviv.iot.film.service;
 
 
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ua.lviv.iot.Film.models.Film;
-import ua.lviv.iot.Film.storage.FilmWriter;
+import ua.lviv.iot.film.models.Film;
+import ua.lviv.iot.film.storage.FilmWriter;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -35,9 +35,10 @@ public final class FilmService {
         return new HashMap<>(filmMap);
     }
 
-    public AtomicInteger getNextAvailable() {
-        return new AtomicInteger(nextAvailable.get());
+    public int getNextAvailable() {
+        return nextAvailable.get();
     }
+
 
     public Map<Integer, Film> getMap() {
         return new HashMap<>(filmMap);

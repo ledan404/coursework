@@ -1,4 +1,4 @@
-package ua.lviv.iot.Film.controller;
+package ua.lviv.iot.film.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 
-import ua.lviv.iot.Film.models.Film;
-import ua.lviv.iot.Film.service.FilmService;
+import ua.lviv.iot.film.models.Film;
+import ua.lviv.iot.film.service.FilmService;
 
 import java.io.IOException;
 import java.util.List;
@@ -55,8 +55,7 @@ public final class FilmController {
 
     @PutMapping(path = "/{id}")
     public ResponseEntity<Film> put(@RequestBody final Film film,
-                                    @PathVariable final Integer id)
-            throws IOException {
+                                    @PathVariable final Integer id) {
         try {
             filmService.putFilm(id, film);
             return ResponseEntity.ok(film);
@@ -66,8 +65,7 @@ public final class FilmController {
     }
 
     @DeleteMapping(path = "/{id}")
-    public ResponseEntity<Film> delete(@PathVariable final Integer id)
-            throws IOException {
+    public ResponseEntity<Film> delete(@PathVariable final Integer id) {
         if (!filmService.getFilmMap().containsKey(id)) {
             return ResponseEntity.notFound().build();
         }

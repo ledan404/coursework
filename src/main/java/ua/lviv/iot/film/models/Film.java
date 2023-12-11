@@ -1,12 +1,12 @@
-package ua.lviv.iot.Film.models;
+package ua.lviv.iot.film.models;
 
 import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.ArrayList;
 import java.util.List;
-
 
 @Getter
 @Setter
@@ -38,14 +38,27 @@ public final class Film {
                 final List<String> fact) {
         this.id = id;
         this.name = name;
-        this.actor = actor;
+        this.actor = new ArrayList<>(actor);
         this.rating = rating;
-        this.review = review;
+        this.review = new ArrayList<>(review);
         this.description = description;
-        this.fact = fact;
+        this.fact = new ArrayList<>(fact);
     }
 
-    public String getHeaders() {
+    public List<String> getActor() {
+        return new ArrayList<>(actor);
+    }
+
+    public List<String> getFact() {
+        return new ArrayList<>(fact);
+    }
+
+    public List<String> getReview() {
+        return new ArrayList<>(review);
+    }
+
+
+    public static String getHeaders() {
         return HEADER;
     }
 
@@ -53,5 +66,16 @@ public final class Film {
         return id + "," + name + "," + actor + ","
                 + rating + "," + review + ","
                 + description + "," + fact + "\n";
+    }
+    public void setActor(final List<String> actor) {
+        this.actor = new ArrayList<>(actor);
+    }
+
+    public void setFact(final List<String> fact) {
+        this.fact = new ArrayList<>(fact);
+    }
+
+    public void setReview(final List<String> review) {
+        this.review = new ArrayList<>(review);
     }
 }

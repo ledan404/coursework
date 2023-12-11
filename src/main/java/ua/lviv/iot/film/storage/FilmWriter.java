@@ -1,7 +1,8 @@
-package ua.lviv.iot.Film.storage;
+package ua.lviv.iot.film.storage;
+
 
 import org.springframework.stereotype.Component;
-import ua.lviv.iot.Film.models.Film;
+import ua.lviv.iot.film.models.Film;
 
 
 import java.io.File;
@@ -11,7 +12,15 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Map;
+import java.util.List;
+import java.util.LinkedList;
+import java.util.HashMap;
+import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Component
 public final class FilmWriter {
@@ -27,8 +36,9 @@ public final class FilmWriter {
 
     public void getFilmsToCsv(final Map<Integer, Film> filmMap) {
         try (Writer writer = new OutputStreamWriter(new FileOutputStream(getFileName()), StandardCharsets.UTF_8)) {
+            writer.write(Film.getHeaders());
             for (Film film : filmMap.values()) {
-                writer.write(film.getHeaders());
+//                writer.write(film.getHeaders());
                 writer.write(film.toCsv());
             }
         } catch (Exception e) {
@@ -47,10 +57,10 @@ public final class FilmWriter {
             File file = new File(new SimpleDateFormat("'film-'yyyy-MM-").format(new Date()) + new SimpleDateFormat("dd").format(date) + ".csv");
             if (file.exists()) {
                 Scanner scanner = new Scanner(file, StandardCharsets.UTF_8);
+                scanner.nextLine();
                 while (scanner.hasNext()) {
-                    scanner.nextLine();
                     String text = scanner.nextLine();
-                    System.out.println(text);
+//                    System.out.println(text);
                     Integer id = 0;
                     String name = "";
                     List<String> actors = new LinkedList<>();

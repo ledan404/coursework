@@ -1,4 +1,4 @@
-package ua.lviv.iot.Film;
+package ua.lviv.iot.film;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

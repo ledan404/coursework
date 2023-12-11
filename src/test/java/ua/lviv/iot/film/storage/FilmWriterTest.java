@@ -1,8 +1,8 @@
-package ua.lviv.iot.Film.storage;
+package ua.lviv.iot.film.storage;
 
 import org.junit.jupiter.api.Test;
-import ua.lviv.iot.Film.models.Film;
-import ua.lviv.iot.Film.service.FilmService;
+import ua.lviv.iot.film.models.Film;
+import ua.lviv.iot.film.service.FilmService;
 
 import java.io.File;
 import java.io.FileWriter;
